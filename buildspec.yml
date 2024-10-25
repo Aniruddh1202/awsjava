@@ -3,23 +3,22 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto11 # Specify Java version (e.g., OpenJDK Corretto 11)
+      java: corretto11 # Specify Java version (e.g., Amazon Corretto 11)
     commands:
-      - echo Installing Maven dependencies
-      - mvn install -DskipTests # Install dependencies without running tests
+      - echo No dependencies to install for a simple Java app
   pre_build:
     commands:
-      - echo Pre-build phase
-      - mvn clean # Clean up previous builds
+      - echo Creating output directory...
+      - mkdir -p out
   build:
     commands:
-      - echo Building the Java application
-      - mvn package # Build the project
+      - echo Compiling Java files...
+      - javac -d out src/*.java # Compile Java files from src/ to out/ directory
   post_build:
     commands:
-      - echo Post-build phase
-      - echo Build completed on `date`
+      - echo Running the Java application...
+      - java -cp out HelloApp # Run the main class; replace `HelloApp` with your main class name
 artifacts:
   files:
-    - target/*.jar # Include built .jar file from the target directory
-  discard-path
+    - out/*.class # Include all .class files from the output directory
+  discard-paths: yes
