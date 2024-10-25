@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11 # Specify Java version (e.g., OpenJDK Corretto 11)
+    commands:
+      - echo Installing Maven dependencies
+      - mvn install -DskipTests # Install dependencies without running tests
+  pre_build:
+    commands:
+      - echo Pre-build phase
+      - mvn clean # Clean up previous builds
+  build:
+    commands:
+      - echo Building the Java application
+      - mvn package # Build the project
+  post_build:
+    commands:
+      - echo Post-build phase
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - target/*.jar # Include built .jar file from the target directory
+  discard-path
